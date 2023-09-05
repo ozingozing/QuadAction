@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     public bool isDead;
 
+    public AudioSource jumpSound;
+
     //¸ðµç º¤ÅÍ°ª
     private Vector3 currentMoveVelocity;
     private Vector3 moveDampVelocity;
@@ -98,6 +100,8 @@ public class Player : MonoBehaviour
         gravityStrength = 9.81f;
         jumpStrength = 15;
         isFireReady = true;
+
+        if (PlayerPrefs.HasKey("MaxScore")) PlayerPrefs.SetInt("MaxScore", 0);
 
         Debug.Log(PlayerPrefs.GetInt("MaxScore"));
         //PlayerPrefs.SetInt("MaxScore", 125134);
@@ -258,6 +262,7 @@ public class Player : MonoBehaviour
         if (isDead) return;
         else
         {
+            
             Ray groundCheckRay = new Ray(transform.position, Vector3.down);
 
             if (Physics.Raycast(groundCheckRay, 0.5f)
@@ -269,6 +274,7 @@ public class Player : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.Space))
                 {
+                    jumpSound.Play();
                     currentForceVelocity.y = jumpStrength;
                     anim.SetBool("isJump", true);
                     anim.SetTrigger("doJump");
@@ -284,6 +290,8 @@ public class Player : MonoBehaviour
             {
                 JumpOut();
             }
+
+            
         }
     }
 

@@ -29,7 +29,7 @@ public class PlayerLook : MonoBehaviour
     {
         if (Input.GetButtonUp("CamChange"))
         {
-            ++nowCamNum;
+            nowCamNum += 1;
             if (nowCamNum >= CamCount) nowCamNum = 0;
 
             switch(nowCamNum)
@@ -37,17 +37,20 @@ public class PlayerLook : MonoBehaviour
                 case 0:
                     arrCam[nowCamNum].enabled = true;
                     playerCamera = arrCam[nowCamNum].transform;
-                    arrCam[CamCount - 1].enabled = false;
+                    arrCam[1].enabled = false;
+                    arrCam[2].enabled = false;
                     break;
                 case 1:
                     arrCam[nowCamNum].enabled = true;
                     playerCamera = arrCam[nowCamNum].transform;
-                    arrCam[nowCamNum - 1].enabled = false;
+                    arrCam[0].enabled = false;
+                    arrCam[2].enabled = false;
                     break;
                 case 2:
                     arrCam[nowCamNum].enabled = true;
                     playerCamera = arrCam[nowCamNum].transform;
-                    arrCam[nowCamNum - 1].enabled = false;
+                    arrCam[0].enabled = false;
+                    arrCam[1].enabled = false;
                     break;
             }
         }

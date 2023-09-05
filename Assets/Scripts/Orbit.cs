@@ -11,7 +11,6 @@ public class Orbit : MonoBehaviour
     
     void Start()
     {
-        
         offSet = transform.position - target.position;
     }
 
