@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 1452343099818925470}
   - component: {fileID: 3433635910246903908}
   - component: {fileID: 878092176208633381}
+  - component: {fileID: 3769480114937351798}
   - component: {fileID: 2258308494873281101}
   - component: {fileID: 3855068208819956385}
   m_Layer: 12
@@ -118,6 +119,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.7, y: 3.7, z: 3.7}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!65 &3769480114937351798
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2519559228943118304}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.7, y: 3.7, z: 3.7}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!195 &2258308494873281101
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -176,6 +198,9 @@ MonoBehaviour:
   missilePortA: {fileID: 3257312054495550848}
   missilePortB: {fileID: 2144362936201596517}
   isLook: 1
+  tempMissleA: {fileID: 0}
+  tempMissleB: {fileID: 0}
+  tempRock: {fileID: 0}
 --- !u!1 &3765521973546555489
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class BossRock : Bullet
 {
+    public static BossRock Instance;
     Rigidbody rb;
     float angularPower = 2;
     float scaleValue = 0.1f;
@@ -12,6 +14,7 @@ public class BossRock : Bullet
 
     private void Awake()
     {
+        if(Instance == null) BossRock.Instance = this;
         angularPower = 0;
         scaleValue = 0;
         rb = GetComponent<Rigidbody>();
@@ -19,7 +22,14 @@ public class BossRock : Bullet
         StartCoroutine(GainPower());
     }
 
-    
+    public void BossDeadCheck()
+    {
+        if (Boss.Instance.isDead)
+        {
+            Debug.Log("º¸½ºÁ×À½");
+            this.gameObject.SetActive(false);
+        }
+    }
 
     IEnumerator GainPowerTimer()
     {
@@ -32,7 +42,7 @@ public class BossRock : Bullet
         while(!isShoot)
         {
             angularPower += 0.05f;
-            scaleValue += 0.005f;
+            scaleValue += 0.002f;
             transform.localScale = Vector3.one * scaleValue;
             rb.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
             isShoot = false;

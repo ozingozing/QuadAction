@@ -13,8 +13,23 @@ public class BossMissile : Bullet
     {
         if(Instance == null) BossMissile.Instance = this;
         nav = GetComponent<NavMeshAgent>();
+        StartCoroutine(LifeTime());
     }
 
+    public void BossDeadCheck()
+    {
+        if (Boss.Instance.isDead)
+        {
+            Debug.Log("º¸½ºÁ×À½");
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator LifeTime()
+    {
+        yield return new WaitForSeconds(7f);
+        this.gameObject.SetActive(false);
+    }
 
     void Update()
     {

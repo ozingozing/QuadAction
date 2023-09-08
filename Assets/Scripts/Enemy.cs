@@ -221,6 +221,7 @@ public class Enemy : MonoBehaviour
             gameObject.layer = 13;
             isDead = true;
             isChase = false;
+            Boss.Instance.isDead = true;
             nav.enabled = false;
             anim.SetTrigger("doDie");
 

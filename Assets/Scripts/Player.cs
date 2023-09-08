@@ -580,6 +580,15 @@ public class Player : MonoBehaviour
                     rb.AddForce(dir * -20, ForceMode.Impulse);
                 }
             }
+            else if(isBossAtk1 && (other.name == "BossRock"))
+            {
+                controller.enabled = false;
+                Vector3 dir = (other.transform.position - this.transform.position).normalized;
+                dir.y = 0;
+                dir = Boss.Instance.transform.forward.normalized;
+                rb.AddForce(dir * 20, ForceMode.Impulse);
+            }
+
 
             if (health <= 0 && !isDead)
             {
@@ -587,6 +596,7 @@ public class Player : MonoBehaviour
                 yield return new WaitForSeconds(1.2f);
                 Time.timeScale = 0;
             }
+
             yield return new WaitForSeconds(0.3f);
 
             isDamage = false;

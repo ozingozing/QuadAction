@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class Boss : Enemy
     public GameObject tempMissleB;
     public GameObject tempRock;
 
+
     void Awake()
     {
         if (Instance == null) Boss.Instance = this;
@@ -31,10 +33,22 @@ public class Boss : Enemy
         StartCoroutine(Think());
     }
 
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            this.rb.angularVelocity = Vector3.zero;
+            this.rb.velocity = Vector3.zero;
+        }
+    }
+
     void Update()
     {
         if(isDead)
         {
+            BossMissile.Instance.BossDeadCheck();
+            BossRock.Instance.BossDeadCheck();
             StopAllCoroutines();
             return;
         }
@@ -56,7 +70,7 @@ public class Boss : Enemy
     {
         yield return new WaitForSeconds(0.1f);
 
-        int ranAction = Random.Range(0, 5);
+        int ranAction = UnityEngine.Random.Range(0, 5);
 
         switch(ranAction)
         {
@@ -88,8 +102,8 @@ public class Boss : Enemy
         BossMissile bossMissileB = instantMissileB.GetComponent<BossMissile>();
         bossMissileB.target = target;
 
-
-
+        
+        
 
         yield return new WaitForSeconds(2f);
 
@@ -101,8 +115,7 @@ public class Boss : Enemy
 
         isLook = false;
         anim.SetTrigger("doBigShot");
-        Instantiate(bullet, transform.position, transform.rotation);
-
+        GameObject bossRock = Instantiate(bullet, transform.position, transform.rotation);
 
         yield return new WaitForSeconds(3f);
 
