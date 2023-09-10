@@ -28,6 +28,27 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent nav;
     public Animator anim;
 
+    private void OnDisable()
+    {
+        isDead = false;
+        isAttack = false;
+        isChase = false;
+        currentHealth = maxHealth;
+        foreach (MeshRenderer mesh in meshs)
+        {
+            mesh.material.color = Color.white;
+        }
+    }
+
+    private void OnEnable()
+    {
+        this.transform.localPosition = Spawner.Instance.Spawn().gameObject.transform.position;
+        this.transform.localRotation = Spawner.Instance.Spawn().gameObject.transform.rotation;
+        nav.enabled = true;
+        this.gameObject.layer = 12;
+        if (enemyTybe != Tybe.D) Invoke("ChaseStart", 2);
+    }
+
     private void Awake()
     {
         if(instance == null) Enemy.instance = this;
@@ -37,8 +58,8 @@ public class Enemy : MonoBehaviour
         meshs = GetComponentsInChildren<MeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-
-        if(enemyTybe != Tybe.D) Invoke("ChaseStart", 2);
+        isDead = false;
+        if (enemyTybe != Tybe.D) Invoke("ChaseStart", 2);
     }
 
     void ChaseStart()
@@ -221,10 +242,10 @@ public class Enemy : MonoBehaviour
             gameObject.layer = 13;
             isDead = true;
             isChase = false;
-            Boss.Instance.isDead = true;
+            
+            
             nav.enabled = false;
             anim.SetTrigger("doDie");
-
             Player.instance.score += score;
             
 
@@ -265,8 +286,8 @@ public class Enemy : MonoBehaviour
                 this.rb.AddForce(Vector3.up * 3, ForceMode.Impulse);
             }
 
-
-            Destroy(gameObject, 4);
+            this.gameObject.SetActive(false);
+            //Destroy(gameObject, 4);
 
             int ranCoin = Random.Range(0, 3);
             yield return new WaitForSeconds(1.5f);
@@ -274,4 +295,10 @@ public class Enemy : MonoBehaviour
         }
         
     }
+
+    
+
+    
+
+
 }

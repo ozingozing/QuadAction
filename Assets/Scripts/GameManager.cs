@@ -5,8 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
 
+    public static GameManager Instance;
+    public PoolManager PoolManager;
+
+    
     public GameObject menuCam;
     public GameObject gameCam;
     public Player player;
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 144;
         if(Instance == null) GameManager.Instance = this;
         enemyList = new List<int>();
         maxScoreTxt.text = string.Format("{0:n0}", PlayerPrefs.GetInt("MaxScore"));
@@ -117,13 +121,15 @@ public class GameManager : MonoBehaviour
         isBattle = false;
         stage++;
     }
+    
+    
 
     IEnumerator InBattle()
     {
         if(stage % 5 == 0)
         {
             enemyCnt_D++;
-            GameObject instantEnemy = Instantiate(enemies[3], enemyZones[0].position, enemyZones[0].rotation);
+            GameObject instantEnemy = PoolManager.Incetance.Get(3);
             Enemy enemy = instantEnemy.GetComponent<Enemy>();
             enemy.target = Player.instance.transform;
             enemy.manager = this;
@@ -152,13 +158,14 @@ public class GameManager : MonoBehaviour
 
             while (enemyList.Count > 0)
             {
-                int ranZone = Random.Range(0, 4);
-                GameObject instantEnemy = Instantiate(enemies[enemyList[0]], enemyZones[ranZone].position, enemyZones[ranZone].rotation);
+                int enemyRange = UnityEngine.Random.Range(0, 3);
+                GameObject instantEnemy = SelectPool(PoolManager, enemyRange);
                 Enemy enemy = instantEnemy.GetComponent<Enemy>();
                 enemy.target = Player.instance.transform;
                 enemy.manager = this;
                 enemyList.RemoveAt(0);
                 yield return new WaitForSeconds(4);
+                
             }
         }
 
@@ -172,6 +179,10 @@ public class GameManager : MonoBehaviour
         StageEnd();
     }
 
+    GameObject SelectPool(PoolManager pool, int index)
+    {
+        return pool.Get(index);
+    }
     private void Update()
     {
         if(isBattle)

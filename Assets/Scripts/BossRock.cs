@@ -14,7 +14,8 @@ public class BossRock : Bullet
 
     private void Awake()
     {
-        if(Instance == null) BossRock.Instance = this;
+        Application.targetFrameRate = 144;
+        if (Instance == null) BossRock.Instance = this;
         angularPower = 0;
         scaleValue = 0;
         rb = GetComponent<Rigidbody>();
@@ -22,13 +23,19 @@ public class BossRock : Bullet
         StartCoroutine(GainPower());
     }
 
-    public void BossDeadCheck()
+    private void Update()
     {
         if (Boss.Instance.isDead)
         {
-            Debug.Log("º¸½ºÁ×À½");
-            this.gameObject.SetActive(false);
+            BossDeadCheck();
         }
+    }
+    public void BossDeadCheck()
+    {
+
+        Debug.Log("º¸½ºÁ×À½");
+        Destroy(this.gameObject);
+
     }
 
     IEnumerator GainPowerTimer()
@@ -42,7 +49,7 @@ public class BossRock : Bullet
         while(!isShoot)
         {
             angularPower += 0.05f;
-            scaleValue += 0.002f;
+            scaleValue += 0.005f;
             transform.localScale = Vector3.one * scaleValue;
             rb.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
             isShoot = false;

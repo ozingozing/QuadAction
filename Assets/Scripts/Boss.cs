@@ -22,12 +22,14 @@ public class Boss : Enemy
 
     void Awake()
     {
+        Application.targetFrameRate = 144;
         if (Instance == null) Boss.Instance = this;
         rb = this.GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        isDead = false;
 
         nav.isStopped = true;
         StartCoroutine(Think());
@@ -45,15 +47,14 @@ public class Boss : Enemy
 
     void Update()
     {
-        if(isDead)
+
+        if (this.isDead)
         {
-            BossMissile.Instance.BossDeadCheck();
-            BossRock.Instance.BossDeadCheck();
-            StopAllCoroutines();
+            this.StopAllCoroutines();
             return;
         }
 
-        if(isLook)
+        if (isLook)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");

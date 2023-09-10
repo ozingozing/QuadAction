@@ -88,7 +88,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if(Player.instance == null) Player.instance = this;
+        Application.targetFrameRate = 144;
+        if (Player.instance == null) Player.instance = this;
 
         ani = this.GetComponentInChildren<Animation>();
         meshs = GetComponentsInChildren<MeshRenderer>();
@@ -358,22 +359,26 @@ public class Player : MonoBehaviour
 
         if (equipWeapon.type == Weapon.Type.Melee) return;
 
-        if (ammo == 0) return;
+        
 
-        if(reloadDown && !isJump && !isDodge && !isSwap && isFireReady && !isShop)
+        if(isReload) return;
+        if (equipWeapon.maxAmmo == equipWeapon.currentAmmo) return;
+
+        if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady && !isShop)
         {
             anim.SetTrigger("doReload");
             isReload = true;
 
-            Invoke("ReloadOut", 2);
+            Invoke("ReloadOut", 0.5f);
         }
     }
 
     void ReloadOut()
     {
         int reAmmo = ammo < equipWeapon.maxAmmo ? ammo : equipWeapon.maxAmmo;
+        ammo -= equipWeapon.maxAmmo - equipWeapon.currentAmmo;
         equipWeapon.currentAmmo = reAmmo;
-        ammo -= reAmmo;
+        
         isReload = false;
     }
 

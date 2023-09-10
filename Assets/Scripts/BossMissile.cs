@@ -11,18 +11,19 @@ public class BossMissile : Bullet
 
     void Awake()
     {
-        if(Instance == null) BossMissile.Instance = this;
+        Application.targetFrameRate = 144;
+        if (Instance == null) BossMissile.Instance = this;
         nav = GetComponent<NavMeshAgent>();
         StartCoroutine(LifeTime());
     }
 
     public void BossDeadCheck()
     {
-        if (Boss.Instance.isDead)
-        {
-            Debug.Log("º¸½ºÁ×À½");
-            this.gameObject.SetActive(false);
-        }
+
+        Debug.Log("º¸½ºÁ×À½");
+        this.nav.isStopped = true;
+        Destroy(this.gameObject);
+
     }
 
     IEnumerator LifeTime()
@@ -33,6 +34,11 @@ public class BossMissile : Bullet
 
     void Update()
     {
+        if(Boss.Instance.isDead)
+        {
+            BossDeadCheck();
+        }
+        else
         nav.SetDestination(target.position);
     }
 }
