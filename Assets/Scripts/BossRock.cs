@@ -8,7 +8,7 @@ public class BossRock : Bullet
 {
     public static BossRock Instance;
     Rigidbody rb;
-    float angularPower = 2;
+    public float angularPower;
     float scaleValue = 0.1f;
     bool isShoot;
 
@@ -16,11 +16,18 @@ public class BossRock : Bullet
     {
         Application.targetFrameRate = 144;
         if (Instance == null) BossRock.Instance = this;
-        angularPower = 0;
-        scaleValue = 0;
+        
         rb = GetComponent<Rigidbody>();
         StartCoroutine(GainPowerTimer());
         StartCoroutine(GainPower());
+    }
+
+    private void OnDisable()
+    {
+        angularPower = 0;
+        scaleValue = 0;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     private void Update()
@@ -29,6 +36,9 @@ public class BossRock : Bullet
         {
             BossDeadCheck();
         }
+
+        angularPower += 0.08f;
+        rb.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
     }
     public void BossDeadCheck()
     {
@@ -48,8 +58,7 @@ public class BossRock : Bullet
     {
         while(!isShoot)
         {
-            angularPower += 0.05f;
-            scaleValue += 0.005f;
+            scaleValue += 0.0055f;
             transform.localScale = Vector3.one * scaleValue;
             rb.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
             isShoot = false;

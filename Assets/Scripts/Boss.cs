@@ -116,7 +116,7 @@ public class Boss : Enemy
 
         isLook = false;
         anim.SetTrigger("doBigShot");
-        GameObject bossRock = Instantiate(bullet, transform.position, transform.rotation);
+        Instantiate(bullet, transform.position, transform.rotation);
 
         yield return new WaitForSeconds(3f);
 

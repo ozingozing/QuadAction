@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.EditorTools;
+
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance;
-    public PoolManager PoolManager;
+    public GameObject poolManager;
+    public PoolManager enemyPool;
 
     
     public GameObject menuCam;
@@ -54,7 +57,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 144;
-        if(Instance == null) GameManager.Instance = this;
+        enemyPool = poolManager.GetComponentInChildren<EnemyPool>();
+        if (Instance == null) GameManager.Instance = this;
         enemyList = new List<int>();
         maxScoreTxt.text = string.Format("{0:n0}", PlayerPrefs.GetInt("MaxScore"));
     }
@@ -129,10 +133,9 @@ public class GameManager : MonoBehaviour
         if(stage % 5 == 0)
         {
             enemyCnt_D++;
-            GameObject instantEnemy = PoolManager.Incetance.Get(3);
+            GameObject instantEnemy = enemyPool.Get(3);
             Enemy enemy = instantEnemy.GetComponent<Enemy>();
             enemy.target = Player.instance.transform;
-            enemy.manager = this;
             boss = instantEnemy.GetComponent<Boss>();
         }
         else
@@ -158,14 +161,11 @@ public class GameManager : MonoBehaviour
 
             while (enemyList.Count > 0)
             {
-                int enemyRange = UnityEngine.Random.Range(0, 3);
-                GameObject instantEnemy = SelectPool(PoolManager, enemyRange);
+                GameObject instantEnemy = enemyPool.Get(enemyList[0]);
+                enemyList.RemoveAt(0);
                 Enemy enemy = instantEnemy.GetComponent<Enemy>();
                 enemy.target = Player.instance.transform;
-                enemy.manager = this;
-                enemyList.RemoveAt(0);
                 yield return new WaitForSeconds(4);
-                
             }
         }
 

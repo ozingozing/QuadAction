@@ -128,7 +128,14 @@ public class Player : MonoBehaviour
             rb.velocity = Vector3.zero;
             FreezeVelocity();
         }
-        
+        else if(collision.gameObject.tag == "BossRock")
+        {
+            Debug.Log("BossRock");
+            controller.enabled = false;
+            Vector3 dir = (collision.transform.position - Boss.Instance.transform.position);
+            dir.y = 0;
+            rb.AddForce(dir, ForceMode.Impulse);
+        }
     }
     private void FixedUpdate()
     {
@@ -532,12 +539,6 @@ public class Player : MonoBehaviour
 
                     isBossAtk = other.name == "BossMeleeArea";
 
-                    if (other.tag == "BossRock")
-                    {
-                        controller.enabled = false;
-                        isBossAtk = true;
-                    }
-
                     if (!isDead)
                     {
                         StartCoroutine(OnDamage(isBossAtk, other));
@@ -565,7 +566,7 @@ public class Player : MonoBehaviour
                 mesh.material.color = Color.yellow;
             }
 
-            if (isBossAtk1 && (other.name == "BossMeleeArea"))
+            if (isBossAtk1)
             {
                 Debug.Log("¸ÂÀ½");
                 controller.enabled = false;
@@ -577,23 +578,17 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("2");
                     dir = Boss.Instance.transform.forward.normalized;
-                    rb.AddForce(dir * 20, ForceMode.Impulse);
+                    rb.AddForce(dir * 40, ForceMode.Impulse);
                 }
                 else
                 {
                     Debug.Log("33333333333");
-                    rb.AddForce(dir * -20, ForceMode.Impulse);
+                    rb.AddForce(dir * -40, ForceMode.Impulse);
                 }
-            }
-            else if(isBossAtk1 && (other.name == "BossRock"))
-            {
-                controller.enabled = false;
-                Vector3 dir = (other.transform.position - this.transform.position).normalized;
-                dir.y = 0;
-                dir = Boss.Instance.transform.forward.normalized;
-                rb.AddForce(dir * 20, ForceMode.Impulse);
+                
             }
 
+            yield return new WaitForSeconds(0.6f);
 
             if (health <= 0 && !isDead)
             {
@@ -602,10 +597,9 @@ public class Player : MonoBehaviour
                 Time.timeScale = 0;
             }
 
-            yield return new WaitForSeconds(0.3f);
-
             isDamage = false;
             rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
             controller.enabled = true;
             foreach (MeshRenderer mesh in meshs)
             {
@@ -635,7 +629,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        
+        Debug.Log("¸ØÃç!1");
         if (other.tag == "Weapon")
         {
             nearObject = null;
@@ -649,10 +643,13 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        Debug.Log("Ãæµ¹Áß´ÜÁ»...");
         if (collision.gameObject.tag == "Enemy")
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
     }
+
+
 }

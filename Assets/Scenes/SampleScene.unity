@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &16038532
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -26993,7 +26993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1022217847
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -43420,7 +43420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1319141036
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -48334,7 +48334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9efd814e44306e47994781b59be5614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolManager: {fileID: 1927978896}
+  poolManager: {fileID: 1526658340}
+  enemyPool: {fileID: 0}
   menuCam: {fileID: 1965067047}
   gameCam: {fileID: 963194225}
   player: {fileID: 1365907475}
@@ -48342,7 +48343,7 @@ MonoBehaviour:
   itemShop: {fileID: 373052898}
   weaponShop: {fileID: 805135797}
   startZone: {fileID: 1434031760}
-  stage: 9
+  stage: 5
   playTime: 0
   isBattle: 0
   enemyCnt_A: 0
@@ -56282,7 +56283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1819785007
 ParticleSystemRenderer:
   serializedVersion: 6

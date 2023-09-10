@@ -18,7 +18,7 @@ public class PoolManager : MonoBehaviour
 
     public virtual GameObject Get(int index)
     {
-        Debug.Log("PoolManager");
+        Debug.Log("PoolManager 자식 Get함수를 쓰렴~");
         return null;
     }
 

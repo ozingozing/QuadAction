@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     public Tybe enemyTybe;
     public int maxHealth;
     public int currentHealth;
-    public GameManager manager;
     public Transform target;
     public bool isChase;
     public BoxCollider meleeArea;
@@ -253,16 +252,16 @@ public class Enemy : MonoBehaviour
             {
 
                 case Tybe.A:
-                    if (manager.enemyCnt_A == 0) break;
-                    manager.enemyCnt_A--;
+                    if (GameManager.Instance.enemyCnt_A == 0) break;
+                    GameManager.Instance.enemyCnt_A--;
                     break;
                 case Tybe.B:
-                    if (manager.enemyCnt_B == 0) break;
-                    manager.enemyCnt_B--;
+                    if (GameManager.Instance.enemyCnt_B == 0) break;
+                    GameManager.Instance.enemyCnt_B--;
                     break;
                 case Tybe.C:
-                    if (manager.enemyCnt_C == 0) break;
-                    manager.enemyCnt_C--;
+                    if (GameManager.Instance.enemyCnt_C == 0) break;
+                    GameManager.Instance.enemyCnt_C--;
                     break;
             }
 

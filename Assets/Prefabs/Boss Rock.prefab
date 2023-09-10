@@ -120,6 +120,7 @@ MonoBehaviour:
   damage: 40
   isMelee: 0
   isRock: 1
+  angularPower: 0
 --- !u!1 &8373443747738714059
 GameObject:
   m_ObjectHideFlags: 0
